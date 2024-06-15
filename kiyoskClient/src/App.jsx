@@ -10,7 +10,7 @@ const App = () => {
 
   // Connect to WebSocket server
   useEffect(() => {
-    const socket = socketIOClient('http://localhost:3000'); 
+    const socket = socketIOClient('https://newsocketback.onrender.com'); 
     // Replace with your server endpoint
     // aikhane localhost:3000 bodole ami kiyosk backend url debo jate okhane giye sobh connect hoe.
 
@@ -29,7 +29,7 @@ const App = () => {
 
   useEffect(() => {
     const getQueue = async() => {
-      const {data} = await axios.get("http://localhost:3000/api/queuelist")
+      const {data} = await axios.get("https://newsocketback.onrender.com/api/queuelist")
       setQueueList(data)
     }
 
@@ -40,9 +40,7 @@ const App = () => {
   const submitHandler = async() => {
     const queueData = { title, author };
     
-    const {data} = await axios.post("http://localhost:3000/api/addqueue", queueData)
-
-    setQueueList([...queueList, data])
+    const {data} = await axios.post("https://newsocketback.onrender.com/api/addqueue", queueData)
 
     setTitle("");
     setAuthor("");
