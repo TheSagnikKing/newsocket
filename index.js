@@ -1,10 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const http = require('http');
+const cors = require("cors")
 const socketIo = require('socket.io'); // Replace 'websocket' with 'socket.io'
 
 const app = express();
 app.use(express.json());
+
+app.use(cors())
 
 mongoose.connect('mongodb+srv://completeAuth123:completeAuth123@cluster0.8s87z6t.mongodb.net/queuesss');
 const db = mongoose.connection;

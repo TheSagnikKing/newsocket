@@ -5,12 +5,12 @@ import axios from 'axios';
 
 const App = () => {
   const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
+  const [author, setAuthor] = useState(""); 
   const [queueList, setQueueList] = useState([]);
 
   // Connect to WebSocket server
   useEffect(() => {
-    const socket = socketIOClient('http://localhost:3000');
+    const socket = socketIOClient('http://localhost:3000'); 
     // Replace with your server endpoint
     // aikhane localhost:3000 bodole ami kiyosk backend url debo jate okhane giye sobh connect hoe.
 
@@ -28,26 +28,26 @@ const App = () => {
   }, []);
 
   useEffect(() => {
-    const getQueue = async () => {
-      const { data } = await axios.get("http://localhost:3000/api/queuelist")
+    const getQueue = async() => {
+      const {data} = await axios.get("http://localhost:3000/api/queuelist")
       setQueueList(data)
     }
 
     getQueue()
 
-  }, [])
+  },[])
 
-  const submitHandler = async () => {
+  const submitHandler = async() => {
     const queueData = { title, author };
-
-    const { data } = await axios.post("http://localhost:3000/api/addqueue", queueData)
+    
+    const {data} = await axios.post("http://localhost:3000/api/addqueue", queueData)
 
     setQueueList([...queueList, data])
 
     setTitle("");
     setAuthor("");
   };
-
+  
 
   // jehutu amr kiyosk e addqueue api call hoche jeta queue add korche so socket server 
   // kiyoske banate hbe.
@@ -59,13 +59,13 @@ const App = () => {
   return (
     <>
       <main>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter Title" />
-        <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Enter Author" />
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Enter Title"/>
+        <input type="text" value={author} onChange={(e) => setAuthor(e.target.value)} placeholder="Enter Author"/>
         <button onClick={submitHandler}>Submit</button>
       </main>
 
       <main>
-        <h2>This is local host <b>5173</b></h2>
+        <h2>This is local host <b>5174</b></h2>
         <h2>List of queue data:</h2>
         <ul>
           {queueList?.map((queue, index) => (
