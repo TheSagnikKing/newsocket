@@ -1,0 +1,21 @@
+{
+  "name": "newsocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.4.1",
+    "socket.io": "^4.7.5",
+    "websocket": "^1.0.35"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
+}
