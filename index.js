@@ -26,7 +26,7 @@ const Queue = mongoose.model('queue', queueSchema);
 const server = http.createServer(app);
 const io = socketIo(server, {
     cors: {
-      origin: "http://localhost:5173",  // Replace with your frontend URL
+      origin: ["http://localhost:5173", "http://localhost:5174"],  // Replace with your frontend URL
       methods: ["GET", "POST"]  // Specify the allowed methods
     }
   }); // Initialize socket.io with the HTTP server
