@@ -25,22 +25,26 @@ const Queue = mongoose.model('queue', queueSchema);
 
 const server = http.createServer(app);
 const io = socketIo(server, {
-    cors: {
-      origin: ["http://localhost:5173", "http://localhost:5174"],  // Replace with your frontend URL
-      methods: ["GET", "POST"]  // Specify the allowed methods
-    }
-  }); // Initialize socket.io with the HTTP server
+  cors: {
+    origin: ["http://localhost:5173", "http://localhost:5174"],  // Replace with your frontend URL
+    methods: ["GET", "POST"]  // Specify the allowed methods
+  }
+}); // Initialize socket.io with the HTTP server
 
 let clients = [];
 
 // Function to broadcast data to all clients
 function broadcastToClients(event, data) {
-    io.emit(event, data); // Emits to all connected clients
+  io.emit(event, data); // Emits to all connected clients
 }
 
 io.on('connection', (socket) => {
-  console.log('New client connected ',socket.id);
+  console.log('New client connected ', socket.id);
   clients.push(socket.id)
+
+  const salonId = socket.handshake.query.salonId
+
+  console.log(salonId)
 
   // Log all clients after a new client connects
   console.log("All Clients ", clients);
@@ -50,7 +54,7 @@ io.on('connection', (socket) => {
     console.log('Received data from frontend:', data);
     broadcastToClients('broadcastData', data); // Broadcast data to all clients
   });
-  
+
   // Handle disconnection
   socket.on('disconnect', () => {
     console.log('Client disconnected');
@@ -86,6 +90,36 @@ app.post('/api/addqueue', async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
+
+// this api is for when i want to send data to particular socket id
+
+// app.post('/api/addqueue', async (req, res) => {
+
+//   const salonId = req.body.salonId ata asche frontend theke
+
+//   const queue = new Queue({
+//     title: req.body.title,
+//     author: req.body.author,
+//   });
+
+//   try {
+//     const newQueue = await queue.save();
+
+//     // Filter clients based on salonId
+//     const clientsToSend = clients.filter(client => client.salonId === salonId);
+
+//     // Emit event to selected clients
+//     clientsToSend.forEach(client => {
+//       io.to(client.id).emit('broadcastData', newQueue);
+//     });
+
+//     res.status(201).json(newQueue);
+//   } catch (err) {
+//     res.status(400).json({ message: err.message });
+//   }
+// });
+
 
 // Start the server
 const port = process.env.PORT || 3000;
